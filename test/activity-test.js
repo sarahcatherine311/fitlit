@@ -45,5 +45,10 @@ describe('Activity', function() {
   it('should be able to return how many minutes the user was active', function() {
     expect(activity.returnMinutesActive(2, '2023/03/24')).to.equal(125)
   });
+
+  it('should be able to return if the user reached thier step goal', function() {
+    expect(activity.returnMetStepGoal(1, '2023/03/25')).to.equal(true)
+    expect(activity.returnMetStepGoal(2, '2023/03/24')).to.equal(false)
+  });
 });
 

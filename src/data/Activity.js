@@ -15,7 +15,6 @@ class Activity {
   };
 
   returnMinutesActive(userID, date) {
-    // const userInfo = this.userData.find(user => user.id === userID)
     const activityEntries = this.activityData.filter(activityEntry => activityEntry.userID === userID);
 
     const dailyEntry = activityEntries.find(entry => {
@@ -24,23 +23,18 @@ class Activity {
     return dailyEntry.minutesActive
   };
 
-  returnMinutesActiveWeek() {
-
-  }
-
-  returnExceededStepGoal() {
-
-  }
-
-  returnClimbingRecord() {
-
-  }
-
-  returnAverages() {
-    // stairs climb specified date
-    // steps taken specific date
-    // minutes active specific date
-  }
-}
+  returnMetStepGoal(userID, date) {
+    const userInfo = this.userData.find(user => user.id === userID)
+    const activityEntries = this.activityData.filter(activityEntry => activityEntry.userID === userID);
+    const dailyEntry = activityEntries.find(entry => {
+      return entry.date === date ;
+    });
+    if(dailyEntry.numSteps >= userInfo.dailyStepGoal) {
+      return true
+    } else {
+      return false
+    };
+  };
+};
 
 export default Activity
