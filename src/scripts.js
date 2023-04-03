@@ -1,11 +1,8 @@
 import './css/styles.css';
 import { userDataFetch } from './apiCalls';
-
-let users, hydration, sleep, activity
-
-import User from "../src/data/User.js"
-import Hydration from "../src/data/Hydration.js"
-import Sleep from "./data/Sleep.js"
+import User from "../src/data/User.js";
+import Hydration from "../src/data/Hydration.js";
+import Sleep from "./data/Sleep.js";
 import Activity from "../src/data/Activity.js";
 
 let welcomeMessage = document.querySelector("#headerWelcome");
@@ -28,34 +25,38 @@ let weeklyStepCount = document.querySelector("#weeklyStepCount");
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
-let newUser;
+let newUser, users, hydration, sleep, activity;
 
 window.addEventListener('load', function () {
   Promise.all([userDataFetch('users'), userDataFetch('hydration'), userDataFetch('sleep'), userDataFetch('activity')])
   .then(data => {
-    users = new User (data[0].users)
-    hydration = new Hydration(data[1].hydrationData)
-    sleep = new Sleep(data[2].sleepData)
-    activity = new Activity(data[3].activityData, data[0].users)
-    generateRandomUser();
-    displayWelcomeMessage();
-    displayInfoCard();
-    displayWaterConsumed();
-    displayWeeklyWaterConsumption();
-    displayDailySleep();
-    displayWeeklySleep();
-    displayAverageSleep();
-    displayActivity();
-    displayWeeklyStepCount();
+    users = new User (data[0].users);
+    hydration = new Hydration(data[1].hydrationData);
+    sleep = new Sleep(data[2].sleepData);
+    activity = new Activity(data[3].activityData, data[0].users);
+    displayUserInfo();
   });
 });
+
+function displayUserInfo() {
+  generateRandomUser();
+  displayWelcomeMessage();
+  displayInfoCard();
+  displayWaterConsumed();
+  displayWeeklyWaterConsumption();
+  displayDailySleep();
+  displayWeeklySleep();
+  displayAverageSleep();
+  displayActivity();
+  displayWeeklyStepCount();
+};
 
 function generateRandomUser() {
   newUser = users.getUserData(Math.floor(Math.random() * users.users.length));
 };
 
 function displayWelcomeMessage() {
-  welcomeMessage.innerText = `Welcome, ${users.getUserFirstName(newUser.id)}!`
+  welcomeMessage.innerText = `Welcome, ${users.getUserFirstName(newUser.id)}!`;
 };
 
 function displayInfoCard() {
@@ -76,7 +77,7 @@ function displayStepGoalComparison() {
     } else if (userStepGoal < users.getAverageStepGoal()) {
         stepGoalComparison.innerText = `You can do it!!! Your step goal is below average.  TRY HARDER.`;
     } else {
-        stepGoalComparison.innerText = `You are right on track with the average step goal.  Way to be just AVERAGE.`
+        stepGoalComparison.innerText = `You are right on track with the average step goal.  Way to be just AVERAGE.`;
     };
 };
 
@@ -84,9 +85,9 @@ function displayWaterConsumed() {
   const currentDayEntry = hydration.getDailyOunces(newUser.id, currentDate);
 
   if (currentDayEntry) {
-    dailyWater.innerText = `You have consumed ${currentDayEntry} ounces of water today.`
+    dailyWater.innerText = `You have consumed ${currentDayEntry} ounces of water today.`;
   } else {
-    dailyWater.innerText = 'Drink more water you thirsty bitch!'
+    dailyWater.innerText = 'Drink more water you thirsty bitch!';
   };
 };
 
@@ -94,7 +95,7 @@ function displayWeeklyWaterConsumption() {
   const weeklyWaterEntries = hydration.getWeeklyOunces(newUser.id, currentDate); 
   weeklyWaterEntries.forEach(entry => {
     weeklyWater.innerText += `${entry.date}: ${entry.numOunces}
-    `
+    `;
   });
 };
 
@@ -102,9 +103,9 @@ function displayDailySleep() {
   const currentDayEntry = sleep.getHoursByDay(newUser.id, currentDate);
 
   if (currentDayEntry) {
-    dailySleep.innerText = `You slept ${currentDayEntry} hours last night.`
+    dailySleep.innerText = `You slept ${currentDayEntry} hours last night.`;
   } else {
-    dailySleep.innerText = 'You need to get more sleep!'
+    dailySleep.innerText = 'You need to get more sleep!';
   };
 };
 
@@ -112,7 +113,7 @@ function displayWeeklySleep() {
   const weeklySleepEntries = sleep.getWeekSleep(newUser.id, currentDate);
   weeklySleepEntries.forEach(entry => {
    weeklySleep.innerText += `${entry.date}: ${entry.hoursSlept} @ ${entry.sleepQuality}
-   `
+   `;
   });
 };
 
@@ -121,9 +122,9 @@ function displayAverageSleep() {
 };
 
 function displayActivity() {
-  dailySteps.innerText = `You took ${activity.returnDailySteps(newUser.id, currentDate)} steps today!`
-  dailyMiles.innerText = `You have walked ${activity.returnMiles(newUser.id, currentDate)} miles today!`
-  dailyMinutes.innerText = `You were active for ${activity.returnMinutesActive(newUser.id, currentDate)} minutes today!`
+  dailySteps.innerText = `You took ${activity.returnDailySteps(newUser.id, currentDate)} steps today!`;
+  dailyMiles.innerText = `You have walked ${activity.returnMiles(newUser.id, currentDate)} miles today!`;
+  dailyMinutes.innerText = `You were active for ${activity.returnMinutesActive(newUser.id, currentDate)} minutes today!`;
 };
 
 function displayWeeklyStepCount() {
@@ -131,10 +132,10 @@ function displayWeeklyStepCount() {
   weeklyActivityEntries.forEach(entry => {
     if(activity.returnMetStepGoal(newUser.id, entry.date)) {
         weeklyStepCount.innerText += `${entry.date}: ${entry.steps}. You met your goal.  Take a nap!
-        `
+        `;
     } else {
         weeklyStepCount.innerText += `${entry.date}: ${entry.steps}. You have not met your goal.  STEP IT UP!
-        `
-    }
+        `;
+    };
   });
 };
