@@ -16,7 +16,7 @@ Next: ```npm start``` in the terminal to see the HTML page
 ```Control + C``` is the command to stop running the local server
 
 ## Preview of App
-![FitLit](insert link here)
+![Screenshot 2023-04-03 at 2 59 43 PM](https://user-images.githubusercontent.com/122226236/229615402-711f3709-4fe8-40cc-92f3-122f1394c7e9.png)
 
 ## Reflections: 
 We completed this project as part of our first two-part group project, where we will be working together over an extended amount of time. We are currently in week two of Module two for the Turing School of Software and Design Front End Web Development program, a four module, seven month focused on preparing students for a career as web developers working with Javascript, HTML, CSS, and the React framework. This project was completed over the course of seven days in line with the project specification and rubric detailed [here](https://frontend.turing.edu/projects/module-2/fitlit-part-one-agile.html). This project allowed us to continue growing our cooperative learning skills, teammwork, communication, and our software developer skills. 
