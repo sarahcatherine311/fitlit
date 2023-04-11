@@ -1,8 +1,8 @@
 import './css/styles.css';
 import { userDataFetch } from './apiCalls';
 import User from "../src/data/User.js";
-import Hydration from "../src/data/Hydration.js";
-import Sleep from "./data/Sleep.js";
+import Hydration from "./data/Hydration.js";
+import Sleep from "./data/sleep.js";
 import Activity from "../src/data/Activity.js";
 
 let welcomeMessage = document.querySelector("#headerWelcome");
@@ -12,7 +12,6 @@ let userAddress = document.querySelector("#userAddress");
 let userStrideLength = document.querySelector("#userSL");
 let userDailyStepGoal = document.querySelector("#userDSG");
 let stepGoalComparison = document.querySelector("#stepGoalComp");
-let userFriends = document.querySelector("#userFriends");
 let dailyWater = document.querySelector("#dailyWater");
 let weeklyWater = document.querySelector("#weeklyWater");
 let dailySleep = document.querySelector("#dailySleep");
@@ -65,7 +64,6 @@ function displayInfoCard() {
     userAddress.innerText = newUser.address;
     userStrideLength.innerText = `Stride Length: ${newUser.strideLength}`;
     userDailyStepGoal.innerText = `Daily Step Goal: ${newUser.dailyStepGoal}`;
-    userFriends.innerText = `Friends: ${newUser.friends}`;
     displayStepGoalComparison();
 };
 

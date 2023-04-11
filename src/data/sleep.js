@@ -4,7 +4,7 @@ class Sleep{
   };
 
   getAvgSleep(userID) {
-    const sleepEntries = this.sleepData.filter(sleepEntry => sleepEntry.userID === userID);
+    const sleepEntries = this.sleepData.filter(entry => entry.userID === userID);
     const avgSleep = sleepEntries.reduce((acc, user) => {
       return acc += user.hoursSlept;
     }, 0);
