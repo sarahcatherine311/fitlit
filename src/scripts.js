@@ -1,5 +1,6 @@
 import './css/styles.css';
 import { userDataFetch } from './apiCalls';
+// import { userPost } from './apiCalls';
 import User from "../src/data/User.js";
 import Hydration from "./data/Hydration.js";
 import Sleep from "./data/sleep.js";
@@ -21,6 +22,11 @@ let dailySteps = document.querySelector("#dailySteps");
 let dailyMiles = document.querySelector("#dailyMiles");
 let dailyMinutes = document.querySelector("#dailyMinutesActive");
 let weeklyStepCount = document.querySelector("#weeklyStepCount");
+let idInput = document.querySelector("#idInput");
+let dateInput = document.querySelector("#dateInput");
+let ouncesInput = document.querySelector("#ouncesInput");
+let submitButton = document.querySelector("#submitForm")
+submitButton.addEventListener('click', displayFormData)
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
@@ -137,3 +143,19 @@ function displayWeeklyStepCount() {
     };
   });
 };
+
+function displayFormData() {
+  event.preventDefault()
+  const data = {"userID": idInput.value, "date": dateInput.value, "numOunces": ouncesInput.value};
+  
+  return fetch('http://localhost:3001/api/v1/hydration', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(data => data.json())
+  .then(json => console.log(json))
+  .catch(err => console.log(`Error at: ${err}`))
+}
