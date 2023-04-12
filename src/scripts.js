@@ -21,10 +21,10 @@ let dailySteps = document.querySelector("#dailySteps");
 let dailyMiles = document.querySelector("#dailyMiles");
 let dailyMinutes = document.querySelector("#dailyMinutesActive");
 let weeklyStepCount = document.querySelector("#weeklyStepCount");
-let dateInput = document.querySelector("#dateInput");
 let ouncesInput = document.querySelector("#ouncesInput");
-let form = document.querySelector("#form")
-let newEntry = document.querySelector('#newEntry')
+let form = document.querySelector("#form");
+let newEntry = document.querySelector('#newEntry');
+let calender = document.querySelector('#calender');
 
 
 let date = new Date();
@@ -53,7 +53,13 @@ function displayUserInfo() {
   displayAverageSleep();
   displayActivity();
   displayWeeklyStepCount();
+  displayCalender();
 };
+
+function displayCalender() {
+  console.log(currentDate.split('/').join('-'))
+  calender.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
+}
 
 function generateRandomUser() {
   newUser = users.getUserData(Math.floor(Math.random() * users.users.length));
@@ -147,10 +153,11 @@ form.addEventListener('submit', (event) => {
   event.preventDefault()
   const data = {
     "userID": newUser.id, 
-    "date": dateInput.value, 
+    "date": document.getElementById('dateInput').value.split('-').join('/'), 
     "numOunces": ouncesInput.value
+
   };
-  
+
   fetch('http://localhost:3001/api/v1/hydration', {
     method: 'POST',
     body: JSON.stringify(data),
