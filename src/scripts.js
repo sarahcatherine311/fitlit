@@ -25,8 +25,8 @@ let weeklyStepCount = document.querySelector("#weeklyStepCount");
 let idInput = document.querySelector("#idInput");
 let dateInput = document.querySelector("#dateInput");
 let ouncesInput = document.querySelector("#ouncesInput");
-let submitButton = document.querySelector("#submitForm")
-submitButton.addEventListener('click', displayFormData)
+let form = document.querySelector("#form")
+
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
@@ -144,11 +144,15 @@ function displayWeeklyStepCount() {
   });
 };
 
-function displayFormData() {
+form.addEventListener('submit', () => {
   event.preventDefault()
-  const data = {"userID": idInput.value, "date": dateInput.value, "numOunces": ouncesInput.value};
+  const data = {
+    "userID": parseInt(idInput.value), 
+    "date": dateInput.value, 
+    "numOunces": ouncesInput.value
+  };
   
-  return fetch('http://localhost:3001/api/v1/hydration', {
+  fetch('http://localhost:3001/api/v1/hydration', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -158,4 +162,30 @@ function displayFormData() {
   .then(data => data.json())
   .then(json => console.log(json))
   .catch(err => console.log(`Error at: ${err}`))
-}
+})
+
+// function postInfo(data) {
+//   console.log(data)
+//   fetch('http://localhost:3001/api/v1/hydration', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(data),
+//   })
+//   .then(data => data.json())
+//   .then(json => console.log(json))
+//   .catch(err => console.log(`Error at: ${err}`))
+// }
+
+// form.addEventListener('submit', (e) => {
+//   event.preventDefault()
+//   const formData = new FormData(e.target);
+//   const data = {
+//     "userID": parseInt(formData.get('id')), 
+//     "date": formData.get('date'), 
+//     "numOunces": formData.get('ounces')
+//   };
+//   postInfo(data)
+  
+// })
