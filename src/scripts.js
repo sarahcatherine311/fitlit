@@ -1,6 +1,5 @@
 import './css/styles.css';
 import { userDataFetch } from './apiCalls';
-// import { userPost } from './apiCalls';
 import User from "../src/data/User.js";
 import Hydration from "./data/Hydration.js";
 import Sleep from "./data/sleep.js";
@@ -22,10 +21,10 @@ let dailySteps = document.querySelector("#dailySteps");
 let dailyMiles = document.querySelector("#dailyMiles");
 let dailyMinutes = document.querySelector("#dailyMinutesActive");
 let weeklyStepCount = document.querySelector("#weeklyStepCount");
-let idInput = document.querySelector("#idInput");
 let dateInput = document.querySelector("#dateInput");
 let ouncesInput = document.querySelector("#ouncesInput");
 let form = document.querySelector("#form")
+let newEntry = document.querySelector('#newEntry')
 
 
 let date = new Date();
@@ -144,10 +143,10 @@ function displayWeeklyStepCount() {
   });
 };
 
-form.addEventListener('submit', () => {
+form.addEventListener('submit', (event) => {
   event.preventDefault()
   const data = {
-    "userID": parseInt(idInput.value), 
+    "userID": newUser.id, 
     "date": dateInput.value, 
     "numOunces": ouncesInput.value
   };
@@ -162,30 +161,11 @@ form.addEventListener('submit', () => {
   .then(data => data.json())
   .then(json => console.log(json))
   .catch(err => console.log(`Error at: ${err}`))
+
+  displayNewHydrationEntry(data)
+  event.target.reset();
 })
 
-// function postInfo(data) {
-//   console.log(data)
-//   fetch('http://localhost:3001/api/v1/hydration', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data),
-//   })
-//   .then(data => data.json())
-//   .then(json => console.log(json))
-//   .catch(err => console.log(`Error at: ${err}`))
-// }
-
-// form.addEventListener('submit', (e) => {
-//   event.preventDefault()
-//   const formData = new FormData(e.target);
-//   const data = {
-//     "userID": parseInt(formData.get('id')), 
-//     "date": formData.get('date'), 
-//     "numOunces": formData.get('ounces')
-//   };
-//   postInfo(data)
-  
-// })
+function displayNewHydrationEntry(data) {
+  newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`
+}
