@@ -21,6 +21,11 @@ let dailySteps = document.querySelector("#dailySteps");
 let dailyMiles = document.querySelector("#dailyMiles");
 let dailyMinutes = document.querySelector("#dailyMinutesActive");
 let weeklyStepCount = document.querySelector("#weeklyStepCount");
+let dateInput = document.querySelector("#dateInput");
+let ouncesInput = document.querySelector("#ouncesInput");
+let form = document.querySelector("#form")
+let newEntry = document.querySelector('#newEntry')
+
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
@@ -137,3 +142,30 @@ function displayWeeklyStepCount() {
     };
   });
 };
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault()
+  const data = {
+    "userID": newUser.id, 
+    "date": dateInput.value, 
+    "numOunces": ouncesInput.value
+  };
+  
+  fetch('http://localhost:3001/api/v1/hydration', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(data => data.json())
+  .then(json => console.log(json))
+  .catch(err => console.log(`Error at: ${err}`))
+
+  displayNewHydrationEntry(data)
+  event.target.reset();
+})
+
+function displayNewHydrationEntry(data) {
+  newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`
+}

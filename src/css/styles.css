@@ -82,6 +82,11 @@ header {
   display: flex;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 /* SideBar */
 .info-card {
   display: flex;
