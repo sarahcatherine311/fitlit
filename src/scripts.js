@@ -24,12 +24,16 @@ let weeklyStepCount = document.querySelector("#weeklyStepCount");
 let ouncesInput = document.querySelector("#ouncesInput");
 let form = document.querySelector("#form");
 let newEntry = document.querySelector('#newEntry');
-let calender = document.querySelector('#calender');
-
+let calendar = document.querySelector('#calendar');
+let calendar2 = document.querySelector('#calendar2');
+let activityNote = document.querySelector('#activityNotes')
+let activityInput = document.querySelector('#activityInput')
+let userNoteBtn = document.querySelector('#userNotes')
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
 let newUser, users, hydration, sleep, activity;
+let activityNotes = [];
 
 window.addEventListener('load', function () {
   Promise.all([userDataFetch('users'), userDataFetch('hydration'), userDataFetch('sleep'), userDataFetch('activity')])
@@ -42,6 +46,8 @@ window.addEventListener('load', function () {
   });
 });
 
+
+
 function displayUserInfo() {
   generateRandomUser();
   displayWelcomeMessage();
@@ -53,12 +59,13 @@ function displayUserInfo() {
   displayAverageSleep();
   displayActivity();
   displayWeeklyStepCount();
-  displayCalender();
+  displayCalendar();
+  displayActivityNote()
 };
 
-function displayCalender() {
-  console.log(currentDate.split('/').join('-'))
-  calender.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
+function displayCalendar() {
+  calendar.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
+  calendar2.innerHTML = `<input id="dateInput2" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
 }
 
 function generateRandomUser() {
@@ -155,7 +162,6 @@ form.addEventListener('submit', (event) => {
     "userID": newUser.id, 
     "date": document.getElementById('dateInput').value.split('-').join('/'), 
     "numOunces": ouncesInput.value
-
   };
 
   fetch('http://localhost:3001/api/v1/hydration', {
@@ -169,10 +175,43 @@ form.addEventListener('submit', (event) => {
   .then(json => console.log(json))
   .catch(err => console.log(`Error at: ${err}`))
 
-  displayNewHydrationEntry(data)
+  displayNewHydrationEntry(data);
   event.target.reset();
 })
 
 function displayNewHydrationEntry(data) {
-  newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`
-}
+  newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`;
+};
+
+
+userNoteBtn.addEventListener('submit', (event) => {
+  event.preventDefault()
+  const calendarTwo = document.getElementById('dateInput2').value.split('-').join('/'); 
+  const newNote = {userID: newUser.id, date: calendarTwo, activityInput: activityInput.value}
+  activityNotes.push(newNote)
+  console.log(activityNotes)
+  
+  localStorage.setItem("activityNotes", JSON.stringify(activityNotes))
+  activityNote.innerText = ''
+  displayActivityNote()
+  activityInput.value = ''
+})
+
+function displayActivityNote() {
+  activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
+  const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
+  userEntries.forEach(entry => {
+    activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
+
+    `
+  })
+};
+
+//On userNoteBtn add an event listener that incokes a function addUserNote(newUser.id)
+// this will push the new object into the activity notes array with the user's id attached
+// it will set the local storage equal to the array of activity note objects
+
+// On page load invoke displayActivityNote(newUser.id)
+// the function will take in newUser.Id
+// it will get the local storage which will be an array of objects of activity notes
+// it will filter through the array to find the ones that match the user's id and display those on the DOM

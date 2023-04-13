@@ -23,7 +23,7 @@
             <h3 id="weeklyWater"></h3>
             <form id="form">
               <label for="date">Date:</label>
-              <div id="calender"></div>
+              <div id="calendar"></div>
               <label for="ounces">Ounces Drank:</label>
               <input id="ouncesInput" type="number" min="0" name="ounces" required>
               <input type="submit" value="Submit New Hydration Entry">
@@ -40,11 +40,19 @@
         </div>
         <section id="activityWidget" class="widget">
           <h1 class="widgetTitles">Activity Data</h1>
-		  <h2 id="dailySteps"></h2>      
-		  <h2 id="dailyMiles"></h2>
-		  <h2 id="dailyMinutesActive"></h2>      
-		  <h3 id="weeklyStepCount"></h3>      
+          <h2 id="dailySteps"></h2>      
+          <h2 id="dailyMiles"></h2>
+          <h2 id="dailyMinutesActive"></h2>      
+          <h3 id="weeklyStepCount"></h3>      
         </section>
+        <form id="userNotes" class="widget">
+          <h1 class="notes">Activity Notes</h1>
+          <label for="date">Date:</label>
+          <div id="calendar2"></div>
+          <input type="text" id="activityInput" required>
+          <input id="noteButton" type="submit" value="Add Activity Note">
+          <section id="activityNotes" class="note"></section>
+        </form>
       </main>
       <sidebar id="infoCard" class="info-card">
         <h1 id="userName" class="user-name"></h1>

@@ -87,6 +87,11 @@ form {
   flex-direction: column;
 }
 
+.note {
+  height: 300px;
+  overflow-y: scroll;
+}
+
 /* SideBar */
 .info-card {
   display: flex;
