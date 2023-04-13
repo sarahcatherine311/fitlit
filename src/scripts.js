@@ -24,8 +24,11 @@ let weeklyStepCount = document.querySelector("#weeklyStepCount");
 let ouncesInput = document.querySelector("#ouncesInput");
 let form = document.querySelector("#form");
 let newEntry = document.querySelector('#newEntry');
-let calender = document.querySelector('#calender');
-
+let calendar = document.querySelector('#calendar');
+let calendar2 = document.querySelector('#calendar2');
+let activityNote = document.querySelector('#activityNotes')
+let activityInput = document.querySelector('#activityInput')
+let userNoteBtn = document.querySelector('#noteButton')
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
@@ -42,6 +45,8 @@ window.addEventListener('load', function () {
   });
 });
 
+
+
 function displayUserInfo() {
   generateRandomUser();
   displayWelcomeMessage();
@@ -53,12 +58,12 @@ function displayUserInfo() {
   displayAverageSleep();
   displayActivity();
   displayWeeklyStepCount();
-  displayCalender();
+  displayCalendar();
 };
 
-function displayCalender() {
-  console.log(currentDate.split('/').join('-'))
-  calender.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
+function displayCalendar() {
+  calendar.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
+  calendar2.innerHTML = `<input id="dateInput2" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
 }
 
 function generateRandomUser() {
@@ -155,7 +160,6 @@ form.addEventListener('submit', (event) => {
     "userID": newUser.id, 
     "date": document.getElementById('dateInput').value.split('-').join('/'), 
     "numOunces": ouncesInput.value
-
   };
 
   fetch('http://localhost:3001/api/v1/hydration', {
@@ -169,10 +173,25 @@ form.addEventListener('submit', (event) => {
   .then(json => console.log(json))
   .catch(err => console.log(`Error at: ${err}`))
 
-  displayNewHydrationEntry(data)
+  displayNewHydrationEntry(data);
   event.target.reset();
 })
 
 function displayNewHydrationEntry(data) {
-  newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`
-}
+  newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`;
+};
+
+// Our users would like to be able to take notes about their day’s activities. For a given day, they would like to be able to keep track of what activity they did and how it went. The data should stay in the application even when refreshed.
+userNoteBtn.addEventListener('click', function(){
+  displayActivityNote(event)
+});
+
+localStorage()
+
+function displayActivityNote(event) {
+  const calendarTwo = document.getElementById('dateInput2').value.split('-').join('/');
+  activityNote.innerHTML += `
+  <p>${calendarTwo}: ${activityInput.value} </p>
+  `;
+  activityInput.value = ''
+};
