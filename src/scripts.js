@@ -182,16 +182,17 @@ function displayNewHydrationEntry(data) {
 };
 
 // Our users would like to be able to take notes about their day’s activities. For a given day, they would like to be able to keep track of what activity they did and how it went. The data should stay in the application even when refreshed.
-userNoteBtn.addEventListener('click', function(){
-  displayActivityNote(event)
-});
+userNoteBtn.addEventListener('click', displayActivityNote);
 
-localStorage()
-
-function displayActivityNote(event) {
+function displayActivityNote() {
   const calendarTwo = document.getElementById('dateInput2').value.split('-').join('/');
+  // activityNote.innerHTML += `
+  // <p>${calendarTwo}: ${activityInput.value} </p>
+  // `;
+  localStorage.setItem("activity", JSON.stringify({date: calendarTwo, activityInput: activityInput.value}))
+  const note = JSON.parse(localStorage.getItem("activity")) 
   activityNote.innerHTML += `
-  <p>${calendarTwo}: ${activityInput.value} </p>
+  <p>${note.date}: ${note.activityInput} </p>
   `;
   activityInput.value = ''
 };
