@@ -45,16 +45,14 @@
           <h2 id="dailyMinutesActive"></h2>      
           <h3 id="weeklyStepCount"></h3>      
         </section>
-        <section id="userNotes" class="widget">
+        <form id="userNotes" class="widget">
           <h1 class="notes">Activity Notes</h1>
           <label for="date">Date:</label>
           <div id="calendar2"></div>
-          <input type="text" id="activityInput">
-          <button id="noteButton">Add Activity Note</button>
-          <section id="activityNotes" class="note">
-
-          </section>
-        </section>
+          <input type="text" id="activityInput" required>
+          <input id="noteButton" type="submit" value="Add Activity Note">
+          <section id="activityNotes" class="note"></section>
+        </form>
       </main>
       <sidebar id="infoCard" class="info-card">
         <h1 id="userName" class="user-name"></h1>

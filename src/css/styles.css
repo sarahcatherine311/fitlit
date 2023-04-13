@@ -90,7 +90,6 @@ form {
 .note {
   height: 300px;
   overflow-y: scroll;
-  /* overflow-x: ; */
 }
 
 /* SideBar */

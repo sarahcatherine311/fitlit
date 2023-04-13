@@ -28,11 +28,12 @@ let calendar = document.querySelector('#calendar');
 let calendar2 = document.querySelector('#calendar2');
 let activityNote = document.querySelector('#activityNotes')
 let activityInput = document.querySelector('#activityInput')
-let userNoteBtn = document.querySelector('#noteButton')
+let userNoteBtn = document.querySelector('#userNotes')
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
 let newUser, users, hydration, sleep, activity;
+let activityNotes = [];
 
 window.addEventListener('load', function () {
   Promise.all([userDataFetch('users'), userDataFetch('hydration'), userDataFetch('sleep'), userDataFetch('activity')])
@@ -59,6 +60,7 @@ function displayUserInfo() {
   displayActivity();
   displayWeeklyStepCount();
   displayCalendar();
+  displayActivityNote()
 };
 
 function displayCalendar() {
@@ -181,18 +183,35 @@ function displayNewHydrationEntry(data) {
   newEntry.innerText = `Your entry for ${data.date} of ${data.numOunces} ounces drank has been submitted! Good job drankin'!`;
 };
 
-// Our users would like to be able to take notes about their day’s activities. For a given day, they would like to be able to keep track of what activity they did and how it went. The data should stay in the application even when refreshed.
-userNoteBtn.addEventListener('click', displayActivityNote);
+
+userNoteBtn.addEventListener('submit', (event) => {
+  event.preventDefault()
+  const calendarTwo = document.getElementById('dateInput2').value.split('-').join('/'); 
+  const newNote = {userID: newUser.id, date: calendarTwo, activityInput: activityInput.value}
+  activityNotes.push(newNote)
+  console.log(activityNotes)
+  
+  localStorage.setItem("activityNotes", JSON.stringify(activityNotes))
+  activityNote.innerText = ''
+  displayActivityNote()
+  activityInput.value = ''
+})
 
 function displayActivityNote() {
-  const calendarTwo = document.getElementById('dateInput2').value.split('-').join('/');
-  // activityNote.innerHTML += `
-  // <p>${calendarTwo}: ${activityInput.value} </p>
-  // `;
-  localStorage.setItem("activity", JSON.stringify({date: calendarTwo, activityInput: activityInput.value}))
-  const note = JSON.parse(localStorage.getItem("activity")) 
-  activityNote.innerHTML += `
-  <p>${note.date}: ${note.activityInput} </p>
-  `;
-  activityInput.value = ''
+  activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
+  const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
+  userEntries.forEach(entry => {
+    activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
+
+    `
+  })
 };
+
+//On userNoteBtn add an event listener that incokes a function addUserNote(newUser.id)
+// this will push the new object into the activity notes array with the user's id attached
+// it will set the local storage equal to the array of activity note objects
+
+// On page load invoke displayActivityNote(newUser.id)
+// the function will take in newUser.Id
+// it will get the local storage which will be an array of objects of activity notes
+// it will filter through the array to find the ones that match the user's id and display those on the DOM
