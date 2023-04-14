@@ -1,4 +1,5 @@
 body {
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -64,7 +65,7 @@ header {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 70%;
+  width: 75%;
   border: 2px solid black;
 }
 
@@ -73,10 +74,11 @@ header {
   margin: 5% 5% 0% 5%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   background-color: rgb(9, 169, 193);
   border-radius: 10px;
   box-shadow: 7px 5px 5px #2c2e34;
+  padding: 25px;
 }
 
 .widget-section {
@@ -91,7 +93,7 @@ form {
 }
 
 .note {
-  height: 300px;
+  height: 60%;
   overflow-y: scroll;
 }
 
@@ -101,11 +103,17 @@ form {
   padding-top: 50px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 40%;
   justify-content: space-between;
   flex-direction: column;
-  width: 30%;
+  width: 25%;
   border: 2px solid black;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 40%;
 }
 
 .user-name {
