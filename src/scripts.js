@@ -205,13 +205,15 @@ userNoteBtn.addEventListener('submit', (event) => {
 })
 
 function displayActivityNote() {
-  activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
-  const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
-  userEntries.forEach(entry => {
-    activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
-
-    `
-  })
+  if (localStorage.getItem("activityNotes")) {
+    activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
+    const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
+    userEntries.forEach(entry => {
+      activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
+  
+      `
+    })
+  }
 };
 
 //On userNoteBtn add an event listener that incokes a function addUserNote(newUser.id)
