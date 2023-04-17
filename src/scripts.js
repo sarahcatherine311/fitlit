@@ -27,10 +27,10 @@ let form = document.querySelector("#form");
 let newEntry = document.querySelector('#newEntry');
 let calendar = document.querySelector('#calendar');
 let calendar2 = document.querySelector('#calendar2');
-let activityNote = document.querySelector('#activityNotes')
-let activityInput = document.querySelector('#activityInput')
-let userNoteBtn = document.querySelector('#userNotes')
-let quote = document.querySelector('#headerQuote')
+let activityNote = document.querySelector('#activityNotes');
+let activityInput = document.querySelector('#activityInput');
+let userNoteBtn = document.querySelector('#userNotes');
+let quote = document.querySelector('#headerQuote');
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
@@ -67,9 +67,9 @@ function displayUserInfo() {
 };
 
 function displayCalendar() {
-  calendar.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
-  calendar2.innerHTML = `<input id="dateInput2" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`
-}
+  calendar.innerHTML = `<input id="dateInput" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`;
+  calendar2.innerHTML = `<input id="dateInput2" type="date" max="${currentDate.split('/').join('-')}" name="date" placeholder="yyyy/mm/dd" required>`;
+};
 
 function generateRandomUser() {
   newUser = users.getUserData(Math.floor(Math.random() * users.users.length));
@@ -80,8 +80,8 @@ function displayWelcomeMessage() {
 };
 
 function displayRandomQuote() {
-  quote.innerText = quotes[Math.floor(Math.random() * quotes.length)]
-}
+  quote.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+};
 
 function displayInfoCard() {
     userName.innerText = newUser.name;
@@ -164,7 +164,7 @@ function displayWeeklyStepCount() {
 };
 
 form.addEventListener('submit', (event) => {
-  event.preventDefault()
+  event.preventDefault();
   const data = {
     "userID": newUser.id, 
     "date": document.getElementById('dateInput').value.split('-').join('/'), 
@@ -180,7 +180,7 @@ form.addEventListener('submit', (event) => {
   })
   .then(data => data.json())
   .then(json => console.log(json))
-  .catch(err => console.log(`Error at: ${err}`))
+  .catch(err => console.log(`Error at: ${err}`));
 
   displayNewHydrationEntry(data);
   event.target.reset();
@@ -192,35 +192,25 @@ function displayNewHydrationEntry(data) {
 
 
 userNoteBtn.addEventListener('submit', (event) => {
-  event.preventDefault()
+  event.preventDefault();
   const calendarTwo = document.getElementById('dateInput2').value.split('-').join('/'); 
-  const newNote = {userID: newUser.id, date: calendarTwo, activityInput: activityInput.value}
-  activityNotes.push(newNote)
-  console.log(activityNotes)
-  
-  localStorage.setItem("activityNotes", JSON.stringify(activityNotes))
-  activityNote.innerText = ''
-  displayActivityNote()
+  const newNote = {userID: newUser.id, date: calendarTwo, activityInput: activityInput.value};
+  activityNotes.push(newNote);
+  localStorage.setItem("activityNotes", JSON.stringify(activityNotes));
+  activityNote.innerText = '';
+  displayActivityNote();
   activityInput.value = ''
-})
+});
 
 function displayActivityNote() {
   if (localStorage.getItem("activityNotes")) {
-    activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
-    const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
+    activityNotes = JSON.parse(localStorage.getItem("activityNotes"));
+    const userEntries = activityNotes.filter(entry => entry.userID === newUser.id);
     userEntries.forEach(entry => {
       activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
   
       `
-    })
-  }
+    });
+  };
 };
 
-//On userNoteBtn add an event listener that incokes a function addUserNote(newUser.id)
-// this will push the new object into the activity notes array with the user's id attached
-// it will set the local storage equal to the array of activity note objects
-
-// On page load invoke displayActivityNote(newUser.id)
-// the function will take in newUser.Id
-// it will get the local storage which will be an array of objects of activity notes
-// it will filter through the array to find the ones that match the user's id and display those on the DOM

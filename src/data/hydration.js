@@ -6,7 +6,7 @@ class Hydration {
   getAverageOunces(userID) {
     const hydrationEntries = this.hydrationData.filter(hydrationEntry => hydrationEntry.userID === userID);
     const averageOunces = hydrationEntries.reduce((acc, user) => {
-      return acc += user.numOunces
+      return acc += user.numOunces;
     }, 0);
     return Math.round(averageOunces/hydrationEntries.length);
   };
@@ -14,14 +14,14 @@ class Hydration {
   getDailyOunces(userID, date) {
     const hydrationEntries = this.hydrationData.filter(hydrationEntry => hydrationEntry.userID === userID);
     const dailyEntry = hydrationEntries.find(entry => {
-      return entry.date === date ;
+      return entry.date === date;
     });
-    return dailyEntry.numOunces
+    return dailyEntry.numOunces;
   };
 
   getWeeklyOunces(userID, date) {
     const hydrationEntries = this.hydrationData.filter(hydrationEntry => hydrationEntry.userID === userID);
-    const indexOfCurrentDayEntry = hydrationEntries.indexOf(hydrationEntries.find(entry => entry.date === date))
+    const indexOfCurrentDayEntry = hydrationEntries.indexOf(hydrationEntries.find(entry => entry.date === date));
    
     let weeklyOunces = [];
     for (let i = indexOfCurrentDayEntry; i > indexOfCurrentDayEntry - 7; i--) {
