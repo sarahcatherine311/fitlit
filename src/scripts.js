@@ -4,6 +4,7 @@ import User from "../src/data/User.js";
 import Hydration from "./data/Hydration.js";
 import Sleep from "./data/sleep.js";
 import Activity from "../src/data/Activity.js";
+import quotes from './data/quotes';
 
 let welcomeMessage = document.querySelector("#headerWelcome");
 let userName = document.querySelector("#userName");
@@ -29,6 +30,7 @@ let calendar2 = document.querySelector('#calendar2');
 let activityNote = document.querySelector('#activityNotes')
 let activityInput = document.querySelector('#activityInput')
 let userNoteBtn = document.querySelector('#userNotes')
+let quote = document.querySelector('#headerQuote')
 
 let date = new Date();
 let currentDate = date.getFullYear() + "/" + ("0" + (date.getMonth()+1)).slice(-2) + "/"+ ("0" + date.getDate()).slice(-2);
@@ -60,7 +62,8 @@ function displayUserInfo() {
   displayActivity();
   displayWeeklyStepCount();
   displayCalendar();
-  displayActivityNote()
+  displayActivityNote();
+  displayRandomQuote();
 };
 
 function displayCalendar() {
@@ -75,6 +78,10 @@ function generateRandomUser() {
 function displayWelcomeMessage() {
   welcomeMessage.innerText = `Welcome, ${users.getUserFirstName(newUser.id)}!`;
 };
+
+function displayRandomQuote() {
+  quote.innerText = quotes[Math.floor(Math.random() * quotes.length)]
+}
 
 function displayInfoCard() {
     userName.innerText = newUser.name;
@@ -198,13 +205,15 @@ userNoteBtn.addEventListener('submit', (event) => {
 })
 
 function displayActivityNote() {
-  activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
-  const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
-  userEntries.forEach(entry => {
-    activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
-
-    `
-  })
+  if (localStorage.getItem("activityNotes")) {
+    activityNotes = JSON.parse(localStorage.getItem("activityNotes")) 
+    const userEntries = activityNotes.filter(entry => entry.userID === newUser.id)
+    userEntries.forEach(entry => {
+      activityNote.innerText += ` ${entry.date}: ${entry.activityInput}
+  
+      `
+    })
+  }
 };
 
 //On userNoteBtn add an event listener that incokes a function addUserNote(newUser.id)
