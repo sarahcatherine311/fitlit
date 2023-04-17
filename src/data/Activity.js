@@ -9,7 +9,7 @@ class Activity {
     const dailyEntry = activityEntries.find(entry => {
       return entry.date === date;
     });
-    return dailyEntry.numSteps
+    return dailyEntry.numSteps;
   };
 
   returnWeeklySteps(userID, startDate) {
@@ -62,4 +62,4 @@ class Activity {
   };
 };
 
-export default Activity
+export default Activity;

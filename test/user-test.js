@@ -46,16 +46,16 @@ describe('User', function() {
   });
 
   it('should return user data from their id', function() {
-    expect(users.getUserData(1)).to.deep.equal(userTestData[0])
-    expect(users.getUserData(2)).to.deep.equal(userTestData[1])
+    expect(users.getUserData(1)).to.deep.equal(userTestData[0]);
+    expect(users.getUserData(2)).to.deep.equal(userTestData[1]);
   });
 
   it('should return the average of all user step goals', function() {
-    expect(users.getAverageStepGoal()).to.equal(6333)
+    expect(users.getAverageStepGoal()).to.equal(6333);
   });
 
   it('should return the users first name', function() {
-    expect(users.getUserFirstName(1)).to.equal('Trystan')
-    expect(users.getUserFirstName(2)).to.equal('Tyreek')
+    expect(users.getUserFirstName(1)).to.equal('Trystan');
+    expect(users.getUserFirstName(2)).to.equal('Tyreek');
   });
 });

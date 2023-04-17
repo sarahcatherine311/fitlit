@@ -16,6 +16,6 @@ const quotes = [
   "'A feeble body weakens the mind.' - Jean-Jacques Rousseau", 
   "'Put all excuses aside and remember this: You are capable.' - Zig Ziglar",
   "'If you think lifting is dangerous, try being weak. Being weak is dangerous.' - Bret Contreras"
-]
+];
 
 export default quotes;
